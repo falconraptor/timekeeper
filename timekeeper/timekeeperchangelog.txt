@@ -1,0 +1,64 @@
+-------- Timekeeper Change Log --------
+-------- Key --------
++ : Added
+% : Fixed or Modified
+- : Removed
+
+---- 3.523 5/7/2014 ----
+% Changed Extras window to not always download all the extras when opened
+% Fixed usefulshortcuts not downloading to right file name
+
+---- 3.52 5/7/2014 ----
+% Fixed usefulshortcuts not launching
+
+---- 3.51 ----
+% Moved back to old dropbox because new dropbox would not download the files
+
+---- 3.5 ----
+% Changed to new dropbox account
+
+---- 3.49 4/30/2014 ----
++ UsefulShortcuts
+% Background not loading on first luanch
+
+---- 3.482 4/23/2014 ----
+% Extras button not transparent
+
+---- 3.481 4/23/2014 ----
+% Toggle transparency
+
+---- 3.48 4/22/2014 ----
++ Safe guard against any of the extra programs causeing timekeeper to crash on startup
+% Toggle background button
+% Made color changing code 5 times more efficient so less lag per second
+% minesweeper crashing for negative numbers
+
+---- 3.47 ----
++ Calender Events
+% Games now only download after opening extras
+% Matrix not downloading on startup
+% Timegame not saving
+% Calender causing timekeeper to crash on startup
+
+---- 3.46 ----
+% not luanching bug
+
+---- 3.45 ----
+% Made Matrix.gif smaller
+% Organized files in dropbox 
+
+---- 3.44 ----
++ Calender
++ Minesweeper and TimeGame update when Timekeeper updates
+% Moved extras to button from label
+% TimeGame not saving or loading
+% extra jars not downloading or not saving to right place
+
+---- 3.43 ----
++ Credits
+% Calculator not calulating right...
+
+---- 3.42 ----
++ Calculator
++ Changelog
+% stop/reset in stopwatch and countdown
