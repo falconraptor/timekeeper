@@ -4,6 +4,9 @@
 % : Fixed or Modified
 - : Removed
 
+---- 3.53 5/8/2014 ----
+- Calender because crashed on startup
+
 ---- 3.524 5/7/2014 ----
 + GitHub: https://github.com/falconraptor/timekeeper
 + Images to Calender

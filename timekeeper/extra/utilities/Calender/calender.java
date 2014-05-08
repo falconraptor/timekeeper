@@ -88,7 +88,7 @@ public class calender extends JFrame {
                 try{b.get(i).addActionListener(clicked(Integer.parseInt(l.get(i).getText())));}catch(Exception e){System.err.println(e);}
             }
         }
-        updatecolor(Color.BLACK,Color.BLACK);
+        updatecolor(Color.BLACK,Color.WHITE);
         return p.get(0);
     }
     public void appear() {super.setVisible(true);}
@@ -97,28 +97,29 @@ public class calender extends JFrame {
         String color="";
         if (test.equals(Color.black)) color="black";
         else if (test.equals(Color.blue)) color="blue";
-        else if (test.equals(Color.cyan)) color="black";
-        else if (test.equals(Color.darkGray)) color="black";
-        else if (test.equals(Color.gray)) color="black";
-        else if (test.equals(Color.green)) color="black";
-        else if (test.equals(Color.lightGray)) color="black";
-        else if (test.equals(Color.magenta)) color="black";
-        else if (test.equals(Color.orange)) color="black";
-        else if (test.equals(Color.pink)) color="black";
-        else if (test.equals(Color.red)) color="black";
-        else if (test.equals(Color.white)) color="black";
-        else if (test.equals(Color.yellow)) color="black";
-        else System.out.println(test);
-        if (!new File("resources\\images\\"+foreground+"left.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+foreground+"left.png","resources\\images\\"+foreground+"left.png");
-        if (!new File("resources\\images\\"+foreground+"right.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+foreground+"right.png","resources\\images\\"+foreground+"right.png");
-        left.setIcon(new ImageIcon("resources\\images\\"+foreground+"left.png"));
-        right.setIcon(new ImageIcon("resources\\images\\"+foreground+"right.png"));
+        else if (test.equals(Color.cyan)) color="cyan";
+        else if (test.equals(Color.darkGray)) color="darkgray";
+        else if (test.equals(Color.gray)) color="gray";
+        else if (test.equals(Color.green)) color="green";
+        else if (test.equals(Color.lightGray)) color="lightgray";
+        else if (test.equals(Color.magenta)) color="magenta";
+        else if (test.equals(Color.orange)) color="orange";
+        else if (test.equals(Color.pink)) color="pink";
+        else if (test.equals(Color.red)) color="red";
+        else if (test.equals(Color.white)) color="white";
+        else if (test.equals(Color.yellow)) color="yellow";
+        else System.err.println(test);
+        if (color.equals("")) return;
+        if (!new File("resources\\images\\"+color+"left.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"left.png","resources\\images\\"+color+"left.png");
+        if (!new File("resources\\images\\"+color+"right.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"right.png","resources\\images\\"+color+"right.png");
+        left.setIcon(new ImageIcon("resources\\images\\"+color+"left.png"));
+        right.setIcon(new ImageIcon("resources\\images\\"+color+"right.png"));
         left.setBackground(background);
         right.setBackground(background);
         super.pack();
     }
     private ActionListener clicked(final int n) {
-        return new ActionListener() {
+        try{return new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 File calfold=new File("resources\\calenders");
                 if (!calfold.exists()) calfold.mkdirs();
@@ -130,7 +131,7 @@ public class calender extends JFrame {
                 ed.cal=calfold;
                 ed.appear();
             }
-        };
+        };} catch(Exception e){System.err.println(e);return new ActionListener() {public void actionPerformed(ActionEvent e) {}};}
     }
     private void downloadfile(String url,String filename) {
         try {

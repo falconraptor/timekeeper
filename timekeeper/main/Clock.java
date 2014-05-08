@@ -40,7 +40,7 @@ public class Clock extends JFrame{
         super.setLocationRelativeTo(null);
     }
     public void clockmain() {
-        try {ex=new extras();}catch(Exception e) {System.err.println(e);}
+        try {ex=new extras();}catch(Exception e){System.err.println(e);}
         ro.loadoptions();
         fixcolor();
         for (int i=0; i<6; i++) labels.add(new JLabel("", 0));
@@ -515,7 +515,7 @@ public class Clock extends JFrame{
             else done[11]=true;
             if (i<ex.bn.t.size()) setcolors(ex.bn.t.get(i));
             else done[12]=true;
-            if (i<ex.cal.p.size()) ex.cal.p.get(i).setBackground(ro.rc.background);
+            /*if (i<ex.cal.p.size()) ex.cal.p.get(i).setBackground(ro.rc.background);
             else done[13]=true;
             if (i<ex.cal.b.size()) setcolors(ex.cal.b.get(i));
             else done[14]=true;
@@ -525,7 +525,11 @@ public class Clock extends JFrame{
                 else if (ex.cal.place==i) ex.cal.l.get(i).setForeground(ro.rc.foreground.brighter().brighter());
             } else done[15]=true;
             if (i<ex.cal.ld.length) setcolors(ex.cal.ld[i]);
-            else done[16]=true;
+            else done[16]=true;*/
+            done[13]=true;
+            done[14]=true;
+            done[15]=true;
+            done[16]=true;
             if (i<ex.p.size()) ex.p.get(i).setBackground(ro.rc.background);
             else done[17]=true;
             if (i<ex.b.size()) setcolors(ex.b.get(i));
