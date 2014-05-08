@@ -4,6 +4,11 @@
 % : Fixed or Modified
 - : Removed
 
+---- 3.524 5/7/2014 ----
++ GitHub: https://github.com/falconraptor/timekeeper
++ Images to Calender
+% Feedback button now leads to: https://github.com/falconraptor/timekeeper/issues
+
 ---- 3.523 5/7/2014 ----
 % Changed Extras window to not always download all the extras when opened
 % Fixed usefulshortcuts not downloading to right file name

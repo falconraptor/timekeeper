@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 public class checkversion {
-    double version=3.523;
+    double version=3.524;
     double read=0.0;
     boolean updated=false;
     public void downloadfile(String url,String filename) {

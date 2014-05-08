@@ -47,7 +47,7 @@ public class Clock extends JFrame{
         for (int i=0; i<15; i++) p.add(new JPanel(new FlowLayout()));
         assembly.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent evt) {assemblybool=(!assemblybool);}});
         options.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent evt) {ro.appear();}});
-        feedback.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent evt) {try { Desktop.getDesktop().browse(new URL("http://falconraptor.weebly.com/bug-report.html").toURI()); } catch (Exception e) { System.out.println(e); }}});
+        feedback.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent evt) {try {Desktop.getDesktop().browse(new URL("https://github.com/falconraptor/timekeeper/issues").toURI());}catch(Exception e){System.err.println(e);}}});
         extras.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent evt) {ex.appear();}});
         if (ro.lunches) firstlunchrb.setSelected(true);
         else secondlunch.setSelected(true);

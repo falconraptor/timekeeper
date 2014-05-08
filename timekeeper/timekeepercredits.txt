@@ -3,6 +3,9 @@
 ---- Timekeeper & Countdown & StopWatch & Calculator & TimeGame & Binary Clock & Calender & UsefulShortcuts ----
 Dustin Surwill
 
+---- Graphics ----
+Nadine Rayes
+
 ---- Minesweeper ----
 Dustin Surwill
 Troy Stokes
@@ -11,5 +14,3 @@ Troy Stokes
 Nadine Rayes
 Troy Stokes
 Dustin Surwill
-Kevin Tyler
-Bailey Smith
