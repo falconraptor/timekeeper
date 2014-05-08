@@ -556,5 +556,6 @@ public class Clock extends JFrame{
             i++;
         }
         setcolors(ex.bn.calc);
+        ex.cal.updatecolor(ro.rc.foreground,ro.rc.background);
     }
 }
