@@ -19,10 +19,11 @@ public class Clock extends JFrame{
     ButtonGroup group=new ButtonGroup();
     optionsdialog ro=new optionsdialog();
     JPanel p1=new JPanel(new GridLayout(1,1,0,0)),p2=new JPanel(new GridLayout(2,1,0,0)),p3=new JPanel(new GridLayout(1,2,0,0));
-    ArrayList <JPanel> p=new ArrayList <JPanel>(0);
+    ArrayList<JPanel> p=new ArrayList <JPanel>(0);
     JRadioButton firstlunchrb=new JRadioButton("First Lunch"),secondlunch=new JRadioButton("Second Lunch");
     JButton assembly=new JButton("Assembly Day Toggle"),options=new JButton("Options"),feedback=new JButton("Feedback"),extras=new JButton("Extras");
-    ArrayList <String[]> holidays=new ArrayList <String[]> (0),schedulenormal=new ArrayList <String[]> (0),schedulewednesday=new ArrayList <String[]> (0),schedulethursday=new ArrayList <String[]> (0),scheduleassembly=new ArrayList <String[]> (0);
+    ArrayList<Holiday> holidays=new ArrayList <Holiday>(0);
+    ArrayList<Schedule> schedulenormal=new ArrayList<Schedule>(0),schedulewednesday=new ArrayList<Schedule>(0),schedulethursday=new ArrayList<Schedule>(0),scheduleassembly=new ArrayList<Schedule>(0);
     Box box=Box.createVerticalBox();
     String[] schools=new String[] {"ATECH"};
     JComboBox school=new JComboBox(schools);
@@ -217,12 +218,13 @@ public class Clock extends JFrame{
             labels.get(13).setText(holiday[1]);
         } else if (!skip) checktime(hour,minute,day);
         else {
-            String[] test=schedulenormal.get(0);
+            Schedule test=schedulenormal.get(0);
             int[] times=new int[6];
-            for (int j=0;j<test.length;j++) {
-                if (j==2) j++;
-                times[j]=Integer.parseInt(test[j]);
-            }
+            times[0]=test.getstarthour();
+            times[1]=test.getstartminute();
+            times[3]=test.getendhour();
+            times[4]=test.getendminute();
+            times[5]=test.getlunch();
             if (donechecking==1) {
                 boolean first=checkam(times[0]),second=checkam(times[3]);
                 String time="";
@@ -231,7 +233,7 @@ public class Clock extends JFrame{
                 if (second) time+=addzeros(times[3])+":"+addzeros(times[4])+"AM";
                 else time+=addzeros(times[3]-12)+":"+addzeros(times[4])+"PM";
                 labels.get(12).setText(time);
-                labels.get(13).setText(test[2]);
+                labels.get(13).setText(test.getclass());
             }
         }
         donechecking=0;
@@ -280,7 +282,7 @@ public class Clock extends JFrame{
             String out=reader.readLine();
             while (out!=null) {
                 String[] test=out.split(":");
-                holidays.add(test);
+                holidays.add(new Holiday(Integer.parseInt(test[0]),Integer.parseInt(test[1]),test[2]));
                 out=reader.readLine();
             }
         } catch (Exception e) {System.out.println(e);}
@@ -316,43 +318,53 @@ public class Clock extends JFrame{
                     thursday=false;
                     assembly=true;
                 } else {
-                    if (normal) schedulenormal.add(out.split(":"));
-                    else if (wednesday) schedulewednesday.add(out.split(":"));
-                    else if (thursday) schedulethursday.add(out.split(":"));
-                    else if (assembly) scheduleassembly.add(out.split(":"));
+                    String[] test=out.split(":");
+                    int[] nums={Integer.parseInt(test[0]),Integer.parseInt(test[1]),Integer.parseInt(test[3]),Integer.parseInt(test[4])};
+                    if (test.length<6) {
+                        if (normal) schedulenormal.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
+                        else if (wednesday) schedulewednesday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
+                        else if (thursday) schedulethursday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
+                        else if (assembly) scheduleassembly.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
+                    } else {
+                        if (normal) schedulenormal.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
+                        else if (wednesday) schedulewednesday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
+                        else if (thursday) schedulethursday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
+                        else if (assembly) scheduleassembly.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
+                    }
                 }
                 out=reader.readLine();
             }
         } catch (Exception e) {System.err.println(e);}
     }
     private void checktime(int hour,int minute, int daynum) {
-        if (assemblybool) for (String[] s:scheduleassembly) startcheckingtime(s,hour,minute);
-        else if (daynum==2||daynum==3||daynum==6) for (String[] s:schedulenormal) startcheckingtime(s,hour,minute);
-        else if (daynum==4) for (String[] s:schedulewednesday) startcheckingtime(s,hour,minute);
-        else if (daynum==5) for (String[] s:schedulethursday) startcheckingtime(s,hour,minute);
+        if (assemblybool) for (Schedule s:scheduleassembly) startcheckingtime(s,hour,minute);
+        else if (daynum==2||daynum==3||daynum==6) for (Schedule s:schedulenormal) startcheckingtime(s,hour,minute);
+        else if (daynum==4) for (Schedule s:schedulewednesday) startcheckingtime(s,hour,minute);
+        else if (daynum==5) for (Schedule s:schedulethursday) startcheckingtime(s,hour,minute);
     }
-    private void startcheckingtime(String[] test, int hour, int minute) {
+    private void startcheckingtime(Schedule test, int hour, int minute) {
         if (donechecking==2) return;
         checklunches(test,hour,minute);
     }
-    private void checklunches(String[] test, int hour, int minute) {
+    private void checklunches(Schedule test, int hour, int minute) {
         int[] times=new int[6];
-        for (int j=0;j<test.length;j++) {
-            if (j==2) j++;
-            times[j]=Integer.parseInt(test[j]);
-        }
+        times[0]=test.getstarthour();
+        times[1]=test.getstartminute();
+        times[3]=test.getendhour();
+        times[4]=test.getendminute();
+        times[5]=test.getlunch();
         if ((firstlunch&&times[5]==1)||(!firstlunch&&times[5]==2)||times[5]==0) donelunches(test,times,minute,hour);
     }
-    private void donelunches(String[] test,int[] times,int minute, int hour) {
+    private void donelunches(Schedule test,int[] times,int minute, int hour) {
         if (donechecking==1) {
             printtimes(test,times,minute,hour);
             return;
         }
         checktimes(hour,minute,test,times);
     }
-    private void printtimes(String[] test,int[] times,int minute, int hour) {
+    private void printtimes(Schedule test,int[] times,int minute, int hour) {
         if (donechecking==1) {
-            if (test[2].equals("Passing Period")) return;
+            if (test.getclass().equals("Passing Period")) return;
             donechecking=2;
             boolean first=checkam(times[0]),second=checkam(times[3]);
             String time="";
@@ -361,10 +373,10 @@ public class Clock extends JFrame{
             if (second) time+=addzeros(times[3])+":"+addzeros(times[4])+"AM";
             else time+=addzeros(times[3]-12)+":"+addzeros(times[4])+"PM";
             labels.get(12).setText(time);
-            labels.get(13).setText(test[2]);
+            labels.get(13).setText(test.getclass());
             return;
         }
-        labels.get(4).setText(test[2]);
+        labels.get(4).setText(test.getclass());
         donechecking=1;
         boolean first=checkam(times[0]),second=checkam(times[3]);
         String time="";
@@ -380,7 +392,7 @@ public class Clock extends JFrame{
             firstbeep=true;
         } else if (!(60*(times[3]-hour)+times[4]-minute==1)&&firstbeep) firstbeep=false;
     }
-    private void checktimes(int hour,int minute, String[] test, int[] times) {
+    private void checktimes(int hour,int minute, Schedule test, int[] times) {
         if (hour>=times[0]&&hour<=times[3]) {
             if (times[1]>times[4]) {
                 if ((minute>=times[1]&&hour==times[0])||(minute<=times[4]&&hour==times[3])) printtimes(test,times,minute,hour);
@@ -403,9 +415,9 @@ public class Clock extends JFrame{
         int month=time.get(time.MONTH)+1,daymonth=time.get(time.DAY_OF_MONTH);
         String[] test=new String[2];
         for (int i=0;i<holidays.size();i++) {
-            if (month==Integer.parseInt(holidays.get(i)[0])&&daymonth==Integer.parseInt(holidays.get(i)[1])) {
-                test[0]=holidays.get(i)[2];
-                test[1]=holidays.get(i+1)[2];
+            if (month==holidays.get(i).getmonth()&&daymonth==holidays.get(i).getday()) {
+                test[0]=holidays.get(i).getname();
+                test[1]=holidays.get(i+1).getname();
                 return test;
             }
         }
@@ -515,7 +527,7 @@ public class Clock extends JFrame{
             else done[11]=true;
             if (i<ex.bn.t.size()) setcolors(ex.bn.t.get(i));
             else done[12]=true;
-            /*if (i<ex.cal.p.size()) ex.cal.p.get(i).setBackground(ro.rc.background);
+            if (i<ex.cal.p.size()) ex.cal.p.get(i).setBackground(ro.rc.background);
             else done[13]=true;
             if (i<ex.cal.b.size()) setcolors(ex.cal.b.get(i));
             else done[14]=true;
@@ -525,11 +537,7 @@ public class Clock extends JFrame{
                 else if (ex.cal.place==i) ex.cal.l.get(i).setForeground(ro.rc.foreground.brighter().brighter());
             } else done[15]=true;
             if (i<ex.cal.ld.length) setcolors(ex.cal.ld[i]);
-            else done[16]=true;*/
-            done[13]=true;
-            done[14]=true;
-            done[15]=true;
-            done[16]=true;
+            else done[16]=true;
             if (i<ex.p.size()) ex.p.get(i).setBackground(ro.rc.background);
             else done[17]=true;
             if (i<ex.b.size()) setcolors(ex.b.get(i));
