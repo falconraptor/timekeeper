@@ -40,7 +40,7 @@ public class Clock extends JFrame{
         super.setLocationRelativeTo(null);
     }
     public void clockmain() {
-        try {ex=new extras();}catch(Exception e) {System.err.println(e);}
+        try {ex=new extras();}catch(Exception e){System.err.println(e);}
         ro.loadoptions();
         fixcolor();
         for (int i=0; i<6; i++) labels.add(new JLabel("", 0));

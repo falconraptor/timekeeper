@@ -20,7 +20,7 @@ public class extras extends JFrame{
     public stopwatch sw=new stopwatch();
     public countdown cd=new countdown();
     public calculator c=new calculator();
-    public calender cal=new calender();
+    public calender cal;
     public extras() {
         super("Extras");
         super.setDefaultCloseOperation(super.DISPOSE_ON_CLOSE);
@@ -29,6 +29,7 @@ public class extras extends JFrame{
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(false);
+        try{cal=new calender();}catch(Exception e){System.err.println(e);};
     }
     public void appear() {
         if (firstlaunch) {
