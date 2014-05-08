@@ -20,7 +20,7 @@ public class extras extends JFrame{
     public stopwatch sw=new stopwatch();
     public countdown cd=new countdown();
     public calculator c=new calculator();
-    public calender cal;
+    //public calender cal=new calender();
     public extras() {
         super("Extras");
         super.setDefaultCloseOperation(super.DISPOSE_ON_CLOSE);
@@ -29,7 +29,6 @@ public class extras extends JFrame{
         super.pack();
         super.setLocationRelativeTo(null);
         super.setVisible(false);
-        try{cal=new calender();}catch(Exception e){System.err.println(e);};
     }
     public void appear() {
         if (firstlaunch) {
@@ -49,7 +48,7 @@ public class extras extends JFrame{
         b.add(new JButton("Stopwatch"));
         b.add(new JButton("Countdown"));
         b.add(new JButton("Calculator"));
-        b.add(new JButton("Calender"));
+        //b.add(new JButton("Calender"));
         p.add(new JPanel(new GridLayout(5,2,0,0)));
         for (int i=0;i<b.size();i++) {
             b.get(i).addActionListener(clicked(b.get(i).getText()));
@@ -68,7 +67,7 @@ public class extras extends JFrame{
                 else if (button.equals("Binary Clock")) bc.appear();
                 else if (button.equals("MineSweeper")) try {Desktop.getDesktop().open(new File("resources\\jars\\minesweeper.jar"));} catch (Exception e) {System.err.println(e);}
                 else if (button.equals("TimeGame")) try {Desktop.getDesktop().open(new File("resources\\jars\\timegame.jar"));} catch (Exception e) {System.err.println(e);}
-                else if (button.equals("Calender")) cal.appear();
+                //else if (button.equals("Calender")) cal.appear();
                 else if (button.equals("UsefulShortcuts")) try {Desktop.getDesktop().open(new File("usefulshortcuts.jar"));} catch (Exception e) {System.err.println(e);}
                 dispose();
             }
