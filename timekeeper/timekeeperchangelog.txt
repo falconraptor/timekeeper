@@ -4,6 +4,9 @@
 % : Fixed or Modified
 - : Removed
 
+---- 3.54 5/8/2014 ----
++ Calender back in after fixing bug for crashing on startup
+
 ---- 3.53 5/8/2014 ----
 - Calender because crashed on startup
 

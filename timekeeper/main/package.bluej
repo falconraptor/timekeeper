@@ -5,6 +5,7 @@ dependency1.type=UsesDependency
 dependency2.from=Clock
 dependency2.to=checkversion
 dependency2.type=UsesDependency
+<<<<<<< HEAD
 dependency3.from=Clock
 dependency3.to=Holiday
 dependency3.type=UsesDependency
@@ -17,6 +18,14 @@ package.editor.x=89
 package.editor.y=299
 package.numDependencies=4
 package.numTargets=5
+=======
+package.editor.height=168
+package.editor.width=399
+package.editor.x=283
+package.editor.y=157
+package.numDependencies=2
+package.numTargets=3
+>>>>>>> master
 package.showExtends=true
 package.showUses=true
 target1.editor.height=700
@@ -28,7 +37,11 @@ target1.name=Schedule
 target1.naviview.expanded=true
 target1.showInterface=false
 target1.type=ClassTarget
+<<<<<<< HEAD
 target1.width=80
+=======
+target1.width=100
+>>>>>>> master
 target1.x=230
 target1.y=140
 target2.editor.height=700
@@ -52,8 +65,13 @@ target3.name=checkversion
 target3.naviview.expanded=true
 target3.showInterface=false
 target3.type=ClassTarget
+<<<<<<< HEAD
 target3.width=100
 target3.x=230
+=======
+target3.width=90
+target3.x=80
+>>>>>>> master
 target3.y=80
 target4.editor.height=701
 target4.editor.width=900
