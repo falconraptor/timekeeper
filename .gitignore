@@ -17,7 +17,6 @@ local.properties
 .loadpath
 *.ctxt
 *.class
-*.bluej
 
 # External tool builders
 .externalToolBuilders/
