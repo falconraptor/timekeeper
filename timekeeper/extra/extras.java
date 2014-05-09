@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
-import java.net.*;
-import java.nio.channels.*;
 import extra.mines.*;
 import extra.utilities.*;
 import extra.utilities.Calender.*;
@@ -32,9 +30,9 @@ public class extras extends JFrame{
     }
     public void appear() {
         if (firstlaunch) {
-            downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/minesweeper.jar","resources\\jars\\minesweeper.jar");
-            downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/timegame.jar","resources\\jars\\timegame.jar");
-            downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/usefulshortcuts.jar","usefulshortcuts.jar");
+            util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/minesweeper.jar","resources\\jars\\minesweeper.jar");
+            util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/timegame.jar","resources\\jars\\timegame.jar");
+            util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/extras/usefulshortcuts.jar","usefulshortcuts.jar");
             firstlaunch=false;
         }
         super.setVisible(true);
@@ -72,17 +70,6 @@ public class extras extends JFrame{
                 dispose();
             }
         };
-    }
-    private void downloadfile(String url,String filename) {
-        try {
-            URL download=new URL(url);
-            ReadableByteChannel rbc=Channels.newChannel(download.openStream());
-            FileOutputStream fileOut = new FileOutputStream(filename);
-            fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
-            fileOut.flush();
-            fileOut.close();
-            rbc.close();
-        } catch(Exception e) {System.err.println(e);}
     }
     public void beep() {
         Toolkit.getDefaultToolkit().beep();

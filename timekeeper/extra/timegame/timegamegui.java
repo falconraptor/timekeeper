@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import options.*;
+import extra.utilities.*;
 public class timegamegui extends JFrame implements Runnable{
     public static double wood=0,gold=0,food=0,metal=0,stone=0,wph=0,fph=0,gph=0,mph=0,sph=0;
     public static int population=5,level=0,wlvl=0,hlvl=0,flvl=0,mlvl=0,qlvl=0,sclvl=0,xp=0,xpn=0,buildingseconds=-1,b=0,r=0,researchingseconds=-1,rwl=0,rml=0,rql=0,rfl=0;
@@ -756,10 +757,10 @@ public class timegamegui extends JFrame implements Runnable{
                     r=Integer.parseInt(data.get(28));
                     researchingseconds=Integer.parseInt(data.get(29));
                     String dtz=data.get(30);
-                    int[] i=checkerrors(dtz);
+                    int[] i=util.checkerrors(dtz);
                     try {cop.foreground=new Color(Integer.parseInt(dtz.substring(dtz.indexOf("r=")+2,dtz.indexOf("r=")+i[0])),Integer.parseInt(dtz.substring(dtz.indexOf("g=")+2,dtz.indexOf("g=")+i[1])),Integer.parseInt(dtz.substring(dtz.indexOf("b=")+2,dtz.indexOf("b=")+i[2])));} catch (Exception e) {System.out.println(e);}
                     String dto=data.get(31);
-                    i=checkerrors(dto);
+                    i=util.checkerrors(dto);
                     try {cop.background=new Color(Integer.parseInt(dto.substring(dto.indexOf("r=")+2,dto.indexOf("r=")+i[0])),Integer.parseInt(dto.substring(dto.indexOf("g=")+2,dto.indexOf("g=")+i[1])),Integer.parseInt(dto.substring(dto.indexOf("b=")+2,dto.indexOf("b=")+i[2])));} catch (Exception e) {System.out.println(e);}
                     for (int a=0;a<26;a++) {
                         bl[a]=data.get(a+32);
@@ -779,20 +780,6 @@ public class timegamegui extends JFrame implements Runnable{
             }
             writer.close();
         } catch (Exception e) {System.out.println(e);}
-    }
-    private int[] checkerrors(String test){return new int[] {findnum(test,"r="),findnum(test,"g="),findnum(test,"b=")};}
-    private int findnum(String abc,String find) {
-        int a=5,t;
-        for (int i=0;i<4;i++) {
-            try {
-                t=Integer.parseInt(abc.substring(abc.indexOf(find)+2,abc.indexOf(find)+a));
-                break;
-            } catch (Exception e) {
-                System.out.println(e);
-                a--;
-            }
-        }
-        return a;
     }
     private void save() {
         try {
@@ -835,12 +822,8 @@ public class timegamegui extends JFrame implements Runnable{
             writer.write(researchingseconds+""+System.getProperty("line.separator"));
             writer.write(cop.foreground+""+System.getProperty("line.separator"));
             writer.write(cop.background+""+System.getProperty("line.separator"));
-            for (int i=0;i<26;i++) {
-                writer.write(bl[i]+System.getProperty("line.separator"));
-            }
-            for (int i=0;i<26;i++) {
-                writer.write(bll[i]+""+System.getProperty("line.separator"));
-            }
+            for (int i=0;i<26;i++) writer.write(bl[i]+System.getProperty("line.separator"));
+            for (int i=0;i<26;i++) writer.write(bll[i]+""+System.getProperty("line.separator"));
             writer.write(buildingplace+""+System.getProperty("line.separator"));
             writer.close();
         }catch(Exception e){System.err.println(e);}
@@ -1005,94 +988,86 @@ public class timegamegui extends JFrame implements Runnable{
         }
         return;
     }
+    private void setcolor(JLabel l) {
+        l.setBackground(cop.background);
+        l.setForeground(cop.foreground);
+    }
+    private void setcolor(JButton l) {
+        l.setBackground(cop.background);
+        l.setForeground(cop.foreground);
+    }
     private void fixcolors() {
         cop.checkcolors();
-        for (int i=0;i<pt.size();i++) pt.get(i).setBackground(cop.background);
-        for (int i=0;i<ps.size();i++) ps.get(i).setBackground(cop.background);
-        for (int i=0;i<pb.size();i++) pb.get(i).setBackground(cop.background);
-        for (int i=0;i<hp.size();i++) hp.get(i).setBackground(cop.background);
-        for (int i=0;i<scp.size();i++) scp.get(i).setBackground(cop.background);
-        for (int i=0;i<lp.size();i++) lp.get(i).setBackground(cop.background);
-        for (int i=0;i<fp.size();i++) lp.get(i).setBackground(cop.background);
-        for (int i=0;i<rp.size();i++) {
-            rp.get(i).setBackground(cop.background);
-            if (i%2==0) rp.get(i).setBorder(BorderFactory.createLineBorder(cop.foreground));
+        boolean[] done=new boolean[24];
+        boolean complete=false;
+        int i=0;
+        while (!complete) {
+            if (i<pt.size()) pt.get(i).setBackground(cop.background);
+            else done[0]=true;
+            if (i<ps.size()) ps.get(i).setBackground(cop.background);
+            else done[1]=true;
+            if (i<pb.size()) pb.get(i).setBackground(cop.background);
+            else done[2]=true;
+            if (i<hp.size()) hp.get(i).setBackground(cop.background);
+            else done[3]=true;
+            if (i<scp.size()) scp.get(i).setBackground(cop.background);
+            else done[4]=true;
+            if (i<lp.size()) lp.get(i).setBackground(cop.background);
+            else done[5]=true;
+            if (i<fp.size()) fp.get(i).setBackground(cop.background);
+            else done[6]=true;
+            if (i<rp.size()) {
+                rp.get(i).setBackground(cop.background);
+                if (i%2==0) rp.get(i).setBorder(BorderFactory.createLineBorder(cop.foreground));
+            } else done[7]=true;
+            if (i<nbp.size()) {
+                nbp.get(i).setBackground(cop.background);
+                if (i%2==0) nbp.get(i).setBorder(BorderFactory.createLineBorder(cop.foreground));
+            } else done[8]=true;
+            if (i<ls.size()) setcolor(ls.get(i));
+            else done[9]=true;
+            if (i<bbl.size()) setcolor(bbl.get(i));
+            else done[10]=true;
+            if (i<nbl.size()) setcolor(nbl.get(i));
+            else done[11]=true;
+            if (i<nbb.size()) setcolor(nbb.get(i));
+            else done[12]=true;
+            if (i<ml.size()) setcolor(ml.get(i));
+            else done[13]=true;
+            if (i<hb.size()) setcolor(hb.get(i));
+            else done[14]=true;
+            if (i<hl.size()) setcolor(hl.get(i));
+            else done[15]=true;
+            if (i<scb.size()) setcolor(scb.get(i));
+            else done[16]=true;
+            if (i<scl.size()) setcolor(scl.get(i));
+            else done[17]=true;
+            if (i<lmb.size()) setcolor(lmb.get(i));
+            else done[18]=true;
+            if (i<ll.size()) setcolor(ll.get(i));
+            else done[19]=true;
+            if (i<fb.size()) setcolor(fb.get(i));
+            else done[20]=true;
+            if (i<fl.size()) setcolor(fl.get(i));
+            else done[21]=true;
+            if (i<rmb.size()) setcolor(rmb.get(i));
+            else done[22]=true;
+            if (i<rl.size()) setcolor(rl.get(i));
+            else done[23]=true;
+            for (boolean b:done) {
+                if (!b) {
+                    complete=false;
+                    break;
+                } else complete=true;
+            }
+            if (complete) break;
+            i++;
         }
-        for (int i=0;i<nbp.size();i++) {
-            nbp.get(i).setBackground(cop.background);
-            if (i%2==0) nbp.get(i).setBorder(BorderFactory.createLineBorder(cop.foreground));
-        }
-        for (int i=0;i<ls.size();i++) {
-            ls.get(i).setBackground(cop.background);
-            ls.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<bbl.size();i++) {
-            bbl.get(i).setBackground(cop.background);
-            bbl.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<nbl.size();i++) {
-            nbl.get(i).setBackground(cop.background);
-            nbl.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<nbb.size();i++) {
-            nbb.get(i).setBackground(cop.background);
-            nbb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<ml.size();i++) {
-            ml.get(i).setBackground(cop.background);
-            ml.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<hb.size();i++) {
-            hb.get(i).setBackground(cop.background);
-            hb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<hl.size();i++) {
-            hl.get(i).setBackground(cop.background);
-            hl.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<scb.size();i++) {
-            scb.get(i).setBackground(cop.background);
-            scb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<scl.size();i++) {
-            scl.get(i).setBackground(cop.background);
-            scl.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<lmb.size();i++) {
-            lmb.get(i).setBackground(cop.background);
-            lmb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<ll.size();i++) {
-            ll.get(i).setBackground(cop.background);
-            ll.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<fb.size();i++) {
-            fb.get(i).setBackground(cop.background);
-            fb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<fl.size();i++) {
-            fl.get(i).setBackground(cop.background);
-            fl.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<rmb.size();i++) {
-            rmb.get(i).setBackground(cop.background);
-            rmb.get(i).setForeground(cop.foreground);
-        }
-        for (int i=0;i<rl.size();i++) {
-            rl.get(i).setBackground(cop.background);
-            rl.get(i).setForeground(cop.foreground);
-        }
-        welcome.setBackground(cop.background);
-        welcome.setForeground(cop.foreground);
-        sb.setBackground(cop.background);
-        bb.setBackground(cop.background);
-        rb.setBackground(cop.background);
-        ob.setBackground(cop.background);
-        lb.setBackground(cop.background);
-        sb.setForeground(cop.foreground);
-        bb.setForeground(cop.foreground);
-        rb.setForeground(cop.foreground);
-        ob.setForeground(cop.foreground);
-        lb.setForeground(cop.foreground);
+        setcolor(welcome);
+        setcolor(sb);
+        setcolor(bb);
+        setcolor(rb);
+        setcolor(ob);
+        setcolor(lb);
     }
 }

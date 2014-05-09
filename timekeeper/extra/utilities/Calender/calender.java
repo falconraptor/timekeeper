@@ -4,8 +4,7 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.net.*;
-import java.nio.channels.*;
+import extra.utilities.*;
 public class calender extends JFrame {
     public ArrayList<JPanel> p=new ArrayList<JPanel>(0);
     public ArrayList<JButton> b=new ArrayList<JButton>(0);
@@ -110,8 +109,8 @@ public class calender extends JFrame {
         else if (test.equals(Color.yellow)) color="yellow";
         else System.err.println(test);
         if (color.equals("")) return;
-        if (!new File("resources\\images\\"+color+"left.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"left.png","resources\\images\\"+color+"left.png");
-        if (!new File("resources\\images\\"+color+"right.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"right.png","resources\\images\\"+color+"right.png");
+        if (!new File("resources\\images\\"+color+"left.png").exists()) util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"left.png","resources\\images\\"+color+"left.png");
+        if (!new File("resources\\images\\"+color+"right.png").exists()) util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/Calender/"+color+"right.png","resources\\images\\"+color+"right.png");
         left.setIcon(new ImageIcon("resources\\images\\"+color+"left.png"));
         right.setIcon(new ImageIcon("resources\\images\\"+color+"right.png"));
         left.setBackground(background);
@@ -132,16 +131,5 @@ public class calender extends JFrame {
                 ed.appear();
             }
         };} catch(Exception e){System.err.println(e);return new ActionListener() {public void actionPerformed(ActionEvent e) {}};}
-    }
-    private void downloadfile(String url,String filename) {
-        try {
-            URL download=new URL(url);
-            ReadableByteChannel rbc=Channels.newChannel(download.openStream());
-            FileOutputStream fileOut = new FileOutputStream(filename);
-            fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
-            fileOut.flush();
-            fileOut.close();
-            rbc.close();
-        } catch(Exception e) {System.err.println(e);}
     }
 }

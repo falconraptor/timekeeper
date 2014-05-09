@@ -4,6 +4,14 @@
 % : Fixed or Modified
 - : Removed
 
+---- 3.6 5/8/2014 ----
++ util class for methods that more than one class uses
+% Timegame color setter to be more efficient
+
+---- 3.55 5/8/2014 ----
++ Added graphics in to the calender
+% Graphic color updater
+
 ---- 3.54 5/8/2014 ----
 + Calender back in after fixing bug for crashing on startup
 

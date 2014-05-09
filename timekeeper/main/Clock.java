@@ -275,7 +275,7 @@ public class Clock extends JFrame{
     private void getholidays() {
         String url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/holidays/"+loadschool+"holidays.txt";
         String filename="resources\\holidays\\"+loadschool+"holidays.holidays";
-        run.downloadfile(url,filename);
+        util.downloadfile(url,filename);
         try {
             File file=new File("resources\\holidays\\"+loadschool+"holidays.holidays");
             BufferedReader reader=new BufferedReader(new FileReader(file));
@@ -290,7 +290,7 @@ public class Clock extends JFrame{
     private void getschedule() {
         String url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/schedules/"+loadschool+"schedule.txt";
         String filename="resources\\schedules\\"+loadschool+"schedule.schedule";
-        run.downloadfile(url,filename);
+        util.downloadfile(url,filename);
         try {
             File file=new File("resources\\schedules\\"+loadschool+"schedule.schedule");
             BufferedReader reader=new BufferedReader(new FileReader(file));
@@ -556,5 +556,6 @@ public class Clock extends JFrame{
             i++;
         }
         setcolors(ex.bn.calc);
+        ex.cal.updatecolor(ro.rc.foreground,ro.rc.background);
     }
 }
