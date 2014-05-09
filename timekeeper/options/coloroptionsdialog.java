@@ -1,13 +1,6 @@
 package options;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import java.awt.*;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
+import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;

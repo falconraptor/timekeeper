@@ -5,9 +5,9 @@ import java.awt.event.*;
 import javax.swing.event.*;
 import java.io.*;
 import java.util.*;
-import java.net.*;
-import java.nio.channels.*;
 import main.*;
+import extra.utilities.*;
+import java.net.*;
 public class optionsdialog extends JFrame{
     public coloroptionsdialog rc=new coloroptionsdialog();
     public boolean animatedbackground=true,load=false,transparent=false,urlb=false,lunches=false;
@@ -59,7 +59,7 @@ public class optionsdialog extends JFrame{
         if (urltext.getText().indexOf(".")==-1) {
             urltext.setText("resources\\images\\matrix.gif");
             urlf=new File("resources\\images\\matrix.gif");
-            run.downloadfile(matrixurl,"resources\\images\\matrix.gif");
+            util.downloadfile(matrixurl,"resources\\images\\matrix.gif");
             return;
         }
         try {
@@ -68,37 +68,23 @@ public class optionsdialog extends JFrame{
             int min=0;
             while (urltext.getText().indexOf("/",min)!=-1) min=urltext.getText().indexOf("/",min)+1;
             urlf=new File("resources\\images\\"+urltext.getText().substring(min));
-            if (!urlf.exists()) run.downloadfile(urltext.getText(),"resources\\images\\"+urltext.getText().substring(min));
+            if (!urlf.exists()) util.downloadfile(urltext.getText(),"resources\\images\\"+urltext.getText().substring(min));
         } catch (Exception ea) {
             urlb=false;
             try {
                 urlf=new File(urltext.getText());
                 if (!urlf.exists()) {
-                    run.downloadfile(matrixurl,"resources\\images\\matrix.gif");
+                    util.downloadfile(matrixurl,"resources\\images\\matrix.gif");
                     urltext.setText("resources\\images\\matrix.gif");
                 }
             } catch (Exception ec) {
                 urlf=new File("resources\\images\\matrix.gif");
-                if (!urlf.exists()) run.downloadfile(matrixurl,"resources\\images\\matrix.gif");
+                if (!urlf.exists()) util.downloadfile(matrixurl,"resources\\images\\matrix.gif");
             }
         }
         if (!urltext.getText().equals(urlf+""))urltext.setText(urlf+"");
     }
     public void appear() {super.setVisible(true);}
-    private int[] checkerrors(String test){return new int[] {findnum(test,"r="),findnum(test,"g="),findnum(test,"b=")};}
-    private int findnum(String abc,String find) {
-        int a=5,t;
-        for (int i=0;i<4;i++) {
-            try {
-                t=Integer.parseInt(abc.substring(abc.indexOf(find)+2,abc.indexOf(find)+a));
-                break;
-            } catch (Exception e) {
-                System.err.println(e);
-                a--;
-            }
-        }
-        return a;
-    }
     public void loadoptions() {
         File oldconfig=new File("resources\\config.dat"),users=new File("resources\\config.cfg");;
         if (oldconfig.exists()) oldconfig.renameTo(users);
@@ -119,10 +105,10 @@ public class optionsdialog extends JFrame{
             reader.close();
         } catch (Exception e) {System.err.println(e);}
         for (int i=5;i<out.size();i++) out.set(i,out.get(i).substring(out.get(i).indexOf(": ")+2));
-        int[] indexes=checkerrors(out.get(5));
+        int[] indexes=util.checkerrors(out.get(5));
         try {rc.foreground=new Color(Integer.parseInt(out.get(5).substring(out.get(5).indexOf("r=")+2,out.get(5).indexOf("r=")+indexes[0])),Integer.parseInt(out.get(5).substring(out.get(5).indexOf("g=")+2,out.get(5).indexOf("g=")+indexes[1])),Integer.parseInt(out.get(5).substring(out.get(5).indexOf("b=")+2,out.get(5).indexOf("b=")+indexes[2])));
         } catch (Exception e) {System.err.println(e);}
-        indexes=checkerrors(out.get(6));
+        indexes=util.checkerrors(out.get(6));
         try {rc.background=new Color(Integer.parseInt(out.get(6).substring(out.get(6).indexOf("r=")+2,out.get(6).indexOf("r=")+indexes[0])),Integer.parseInt(out.get(6).substring(out.get(6).indexOf("g=")+2,out.get(6).indexOf("g=")+indexes[1])),Integer.parseInt(out.get(6).substring(out.get(6).indexOf("b=")+2,out.get(6).indexOf("b=")+indexes[2])));
         } catch (Exception e) {System.err.println(e);}
         animatedbackground=Boolean.parseBoolean(out.get(7));

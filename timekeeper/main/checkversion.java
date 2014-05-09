@@ -1,29 +1,17 @@
 package main;
 import java.io.*;
-import java.net.*;
-import java.nio.channels.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import extra.utilities.*;
 public class checkversion {
-    double version=3.55;
+    double version=3.6;
     double read=0.0;
     boolean updated=false;
-    public void downloadfile(String url,String filename) {
-        try {
-            URL download=new URL(url);
-            ReadableByteChannel rbc=Channels.newChannel(download.openStream());
-            FileOutputStream fileOut = new FileOutputStream(filename);
-            fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
-            fileOut.flush();
-            fileOut.close();
-            rbc.close();
-        } catch(Exception e) {System.out.println(e);}
-    }
     public void checkversiontime() {
         String url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeeperversion.txt";
         String filename="resources\\timekeeperversion.txt";
-        downloadfile(url,filename);
+        util.downloadfile(url,filename);
         try {
             File file=new File("resources\\timekeeperversion.txt");
             BufferedReader reader=new BufferedReader(new FileReader(file));
@@ -47,13 +35,13 @@ public class checkversion {
                 updated=true;
                 url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeeperchangelog.txt";
                 filename="resources\\changelog.txt";
-                downloadfile(url,filename);
+                util.downloadfile(url,filename);
                 url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeepercredits.txt";
                 filename="resources\\credits.txt";
-                downloadfile(url,filename);
+                util.downloadfile(url,filename);
                 url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeeper.jar";
                 filename="timekeeper"+read+".jar";
-                downloadfile(url,filename);
+                util.downloadfile(url,filename);
                 Runtime.getRuntime().exec("java -jar timekeeper"+read+".jar");
                 System.exit(0);
             }

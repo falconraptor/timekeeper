@@ -1,8 +1,10 @@
 #BlueJ package file
+objectbench.height=100
+objectbench.width=197
 package.editor.height=196
 package.editor.width=404
-package.editor.x=246
-package.editor.y=165
+package.editor.x=326
+package.editor.y=245
 package.numDependencies=0
 package.numTargets=5
 package.showExtends=true
@@ -40,6 +42,7 @@ target5.name=extras
 target5.naviview.expanded=true
 target5.showInterface=false
 target5.type=ClassTarget
+target5.typeParameters=
 target5.width=80
 target5.x=160
 target5.y=20

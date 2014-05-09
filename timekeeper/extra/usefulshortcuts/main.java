@@ -1,12 +1,11 @@
 package extra.usefulshortcuts;
 import java.awt.*;
-import java.net.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.event.*;
 import java.util.*;
 import java.io.*;
-import java.nio.channels.*;
+import extra.utilities.*;
 @SuppressWarnings("unchecked")
 public class main {
     Robot r;
@@ -48,7 +47,7 @@ public class main {
             return;
         }
         if (!new File("resources\\images").exists()) new File("resources\\images").mkdirs();
-        if (!new File("resources\\images\\usefulshortcutsicon.png").exists()) downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/usefulshortcutsicon.png","resources\\images\\usefulshortcutsicon.png");
+        if (!new File("resources\\images\\usefulshortcutsicon.png").exists()) util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/usefulshortcutsicon.png","resources\\images\\usefulshortcutsicon.png");
         trayIcon=new TrayIcon(createImage("resources\\images\\usefulshortcutsicon.png"));
         if (!loaded) {
             menus.add(new Menu("Timekeeper"));
@@ -132,16 +131,16 @@ public class main {
                             else command="iexplore "+u.geturl();
                             new Thread(new Runnable() {
                                 public void run() {
-                                    windowsr();
-                                    sendtext(command.toLowerCase());
-                                    enter();
+                                    util.windowsr(r);
+                                    util.sendtext(command.toLowerCase(),r);
+                                    util.enter(r);
                                 }}).start();
                         }
                     }
                     for (files f:file) {
                         if (item.getLabel().equals(f.getcommand())) {
                             if (item.getLabel().equals("Timekeeper")) {
-                                downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeeperversion.txt","timekeeperversion.txt");
+                                util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/timekeeperversion.txt","timekeeperversion.txt");
                                 Double read=0.0;
                                 try {
                                     File file=new File("timekeeperversion.txt");
@@ -151,11 +150,11 @@ public class main {
                                     read=Double.parseDouble(out);
                                     file.delete();
                                 } catch(Exception e){System.err.println(e);}
-                                if (!new File("timekeeper"+read+".jar").exists()) downloadfile(f.geturl(),"timekeeper"+read+".jar");
+                                if (!new File("timekeeper"+read+".jar").exists()) util.downloadfile(f.geturl(),"timekeeper"+read+".jar");
                                 try {Desktop.getDesktop().open(new File("timekeeper"+read+".jar"));} catch (Exception e) {System.err.println(e);}
                                 break;
                             }
-                            if (!new File(f.getpath()).exists()&&!f.geturl().equals("")) downloadfile(f.geturl(),f.getpath());
+                            if (!new File(f.getpath()).exists()&&!f.geturl().equals("")) util.downloadfile(f.geturl(),f.getpath());
                             try {if (Desktop.isDesktopSupported()) Desktop.getDesktop().open(new File(new File(f.getpath()).getCanonicalPath()));
                             } catch (Exception e) {System.err.println(e);}
                         }
@@ -165,94 +164,7 @@ public class main {
         for (MenuItem m:menuitems) m.addActionListener(listener);
         updategui();
     }
-    private void downloadfile(String url,String filename) {
-        try {
-            URL download=new URL(url);
-            ReadableByteChannel rbc=Channels.newChannel(download.openStream());
-            FileOutputStream fileOut = new FileOutputStream(filename);
-            fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
-            fileOut.flush();
-            fileOut.close();
-            rbc.close();
-        } catch(Exception e) {System.err.println(e);}
-    }
     private Image createImage(String path) {return (new ImageIcon(path)).getImage();}
-    private void windowsr() {
-        r.keyPress(KeyEvent.VK_WINDOWS);
-        r.keyPress('R');
-        r.keyRelease(KeyEvent.VK_WINDOWS);
-        r.keyRelease('R');
-        r.delay(50);
-    }
-    private void enter() {
-        r.keyPress(KeyEvent.VK_ENTER);
-        r.keyRelease(KeyEvent.VK_ENTER);
-    }
-    private void sendtext(String s) {
-        int[] command=getcodes(s);
-        for (int c:command) {
-            if (c<0) {
-                c*=-1;
-                r.keyPress(KeyEvent.VK_SHIFT);
-                r.keyPress(c);
-                r.keyRelease(KeyEvent.VK_SHIFT);
-                r.keyRelease(c);
-            }else {
-                r.keyPress(c);
-                r.keyRelease(c);
-            }
-        }
-    }
-    private int[] getcodes(String s) {
-        s=s.toLowerCase();
-        int[] l=new int[s.length()];
-        for (int i=0;i<s.length();i++) {
-            char c=s.charAt(i);
-            if (c=='a') l[i]=KeyEvent.VK_A;
-            else if (c=='b') l[i]=KeyEvent.VK_B;
-            else if (c=='c') l[i]=KeyEvent.VK_C;
-            else if (c=='d') l[i]=KeyEvent.VK_D;
-            else if (c=='e') l[i]=KeyEvent.VK_E;
-            else if (c=='f') l[i]=KeyEvent.VK_F;
-            else if (c=='g') l[i]=KeyEvent.VK_G;
-            else if (c=='h') l[i]=KeyEvent.VK_H;
-            else if (c=='i') l[i]=KeyEvent.VK_I;
-            else if (c=='j') l[i]=KeyEvent.VK_J;
-            else if (c=='k') l[i]=KeyEvent.VK_K;
-            else if (c=='l') l[i]=KeyEvent.VK_L;
-            else if (c=='m') l[i]=KeyEvent.VK_M;
-            else if (c=='n') l[i]=KeyEvent.VK_N;
-            else if (c=='o') l[i]=KeyEvent.VK_O;
-            else if (c=='p') l[i]=KeyEvent.VK_P;
-            else if (c=='q') l[i]=KeyEvent.VK_Q;
-            else if (c=='r') l[i]=KeyEvent.VK_R;
-            else if (c=='s') l[i]=KeyEvent.VK_S;
-            else if (c=='t') l[i]=KeyEvent.VK_T;
-            else if (c=='u') l[i]=KeyEvent.VK_U;
-            else if (c=='v') l[i]=KeyEvent.VK_V;
-            else if (c=='w') l[i]=KeyEvent.VK_W;
-            else if (c=='x') l[i]=KeyEvent.VK_X;
-            else if (c=='y') l[i]=KeyEvent.VK_Y;
-            else if (c=='z') l[i]=KeyEvent.VK_Z;
-            else if (c==' ') l[i]=KeyEvent.VK_SPACE;
-            else if (c=='0') l[i]=KeyEvent.VK_0;
-            else if (c=='1') l[i]=KeyEvent.VK_1;
-            else if (c=='2') l[i]=KeyEvent.VK_2;
-            else if (c=='3') l[i]=KeyEvent.VK_3;
-            else if (c=='4') l[i]=KeyEvent.VK_4;
-            else if (c=='5') l[i]=KeyEvent.VK_5;
-            else if (c=='6') l[i]=KeyEvent.VK_6;
-            else if (c=='7') l[i]=KeyEvent.VK_7;
-            else if (c=='8') l[i]=KeyEvent.VK_8;
-            else if (c=='9') l[i]=KeyEvent.VK_9;
-            else if (c=='.') l[i]=KeyEvent.VK_PERIOD;
-            else if (c=='/') l[i]=KeyEvent.VK_SLASH;
-            else if (c==':') l[i]=-1*KeyEvent.VK_SEMICOLON;
-            else if (c==';') l[i]=KeyEvent.VK_SEMICOLON;
-            else if (c=='\\') l[i]=KeyEvent.VK_BACK_SLASH;
-        }
-        return l;
-    }
     private void loadconfig() {
         try {
             File folder=new File("resources\\usefulshortcutsconfig.cfg");
@@ -313,8 +225,8 @@ public class main {
                                 String[] a=test[1].split("%");
                                 for (int i=1;i<3;i++) stuff[i]=a[i-1];
                             } else {
-                                getrelativepath(test[1]);
-                                stuff[1]=getrelativepath(test[1]);
+                                util.getrelativepath(test[1]);
+                                stuff[1]=util.getrelativepath(test[1]);
                                 stuff[2]="";
                             }
                             file.add(new files(stuff[1],stuff[0],stuff[2]));
@@ -488,7 +400,7 @@ public class main {
                                     menuitemsinmenus.set(i,menuitemsinmenus.get(i)+1);
                                 }
                             }
-                            try {file.add(new files(getrelativepath(chooser.getSelectedFile().getAbsolutePath()),name,""));
+                            try {file.add(new files(util.getrelativepath(chooser.getSelectedFile().getAbsolutePath()),name,""));
                             } catch(Exception e){System.err.println(e);}
                             lists.clear();
                             first=true;
@@ -531,19 +443,5 @@ public class main {
                 for (MenuItem m:menuitems) m.addActionListener(listener);
             }
         };
-    }
-    private String getrelativepath(String path) {
-        File test=new File("").getAbsoluteFile();
-        if (test.getAbsolutePath().substring(0,1).equals(path.substring(0,1))) {
-            File parent=new File(test.getParent());
-            int parents=1;
-            while (parent.getAbsolutePath().length()>4) {
-                parent=new File(parent.getParent());
-                parents++;
-            }
-            path=path.substring(3);
-            for (int i=0;i<parents;i++) path="..\\"+path;
-        }
-        return path;
     }
 }
