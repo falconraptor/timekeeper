@@ -86,7 +86,7 @@ public class optionsdialog extends JFrame{
     }
     public void appear() {super.setVisible(true);}
     public void loadoptions() {
-        File oldconfig=new File("resources\\config.dat"),users=new File("resources\\config.cfg");;
+        File oldconfig=new File("resources\\config.dat"),users=new File("resources\\config.cfg");
         if (oldconfig.exists()) oldconfig.renameTo(users);
         try {
             if (!users.exists()) {

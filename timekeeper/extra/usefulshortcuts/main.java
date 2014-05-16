@@ -27,7 +27,7 @@ public class main {
     public static void main(String[] args) {new main();}
     public main(){
         loadconfig();
-        options.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        options.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         options.setSize(500,500);
         options.setLocationRelativeTo(null);
         options.setVisible(false);
