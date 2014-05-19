@@ -6,6 +6,9 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 import extra.utilities.*;
+import javax.imageio.*;
+import javax.swing.border.*;
+import java.awt.image.*;
 @SuppressWarnings("unchecked")
 public class main {
     Robot r;
@@ -41,14 +44,14 @@ public class main {
         final boolean chrome;
         if (new File("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe").exists()||new File("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe").exists()) chrome=true;
         else chrome=false;
+        File fold=new File("resources");
+        if (!fold.exists()) fold.mkdir();
         if (!SystemTray.isSupported()) {
             JOptionPane.showMessageDialog(null,"SystemTray not supported","ERROR",JOptionPane.ERROR_MESSAGE);
-            trayIcon=new TrayIcon(createImage("resources\\images\\usefulshortcutsicon.png"));
+            trayIcon=null;
             return;
         }
-        if (!new File("resources\\images").exists()) new File("resources\\images").mkdirs();
-        if (!new File("resources\\images\\usefulshortcutsicon.png").exists()) util.downloadfile("https://dl.dropboxusercontent.com/u/109423311/timekeeper/images/usefulshortcutsicon.png","resources\\images\\usefulshortcutsicon.png");
-        trayIcon=new TrayIcon(createImage("resources\\images\\usefulshortcutsicon.png"));
+        trayIcon=new TrayIcon(createImage());
         if (!loaded) {
             menus.add(new Menu("Timekeeper"));
             menuitems.add(new MenuItem("Timekeeper"));
@@ -164,7 +167,14 @@ public class main {
         for (MenuItem m:menuitems) m.addActionListener(listener);
         updategui();
     }
-    private Image createImage(String path) {return (new ImageIcon(path)).getImage();}
+    private Image createImage() {
+        try {return ImageIO.read(getClass().getClassLoader().getResourceAsStream("resources/images/usefulshortcutsicon.png"));
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null,"Image not loaded","ERROR",JOptionPane.ERROR_MESSAGE);
+            System.err.println(e);
+            return null;
+        }
+    }
     private void loadconfig() {
         try {
             File folder=new File("resources\\usefulshortcutsconfig.cfg");
