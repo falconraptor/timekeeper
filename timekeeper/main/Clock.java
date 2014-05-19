@@ -273,12 +273,10 @@ public class Clock extends JFrame{
         time.clockmain();
     }
     private void getholidays() {
-        String url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/holidays/"+loadschool+"holidays.txt";
         String filename="resources\\holidays\\"+loadschool+"holidays.holidays";
-        util.downloadfile(url,filename);
         try {
-            File file=new File("resources\\holidays\\"+loadschool+"holidays.holidays");
-            BufferedReader reader=new BufferedReader(new FileReader(file));
+            InputStream in = getClass().getClassLoader().getResourceAsStream(filename);
+            BufferedReader reader=new BufferedReader(new InputStreamReader(in));
             String out=reader.readLine();
             while (out!=null) {
                 String[] test=out.split(":");
@@ -288,12 +286,10 @@ public class Clock extends JFrame{
         } catch (Exception e) {System.out.println(e);}
     }
     private void getschedule() {
-        String url="https://dl.dropboxusercontent.com/u/109423311/timekeeper/schedules/"+loadschool+"schedule.txt";
         String filename="resources\\schedules\\"+loadschool+"schedule.schedule";
-        util.downloadfile(url,filename);
         try {
-            File file=new File("resources\\schedules\\"+loadschool+"schedule.schedule");
-            BufferedReader reader=new BufferedReader(new FileReader(file));
+            InputStream in = getClass().getClassLoader().getResourceAsStream(filename);
+            BufferedReader reader=new BufferedReader(new InputStreamReader(in));
             String out=reader.readLine();
             boolean normal=false,wednesday=false,thursday=false,assembly=false;
             while (out!=null) {
