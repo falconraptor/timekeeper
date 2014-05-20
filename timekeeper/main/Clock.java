@@ -257,10 +257,6 @@ public class Clock extends JFrame{
             if (!folder.exists()) folder.mkdir();
             folder=new File("resources\\images");
             if (!folder.exists()) folder.mkdir();
-            folder=new File("resources\\schedules");
-            if (!folder.exists()) folder.mkdir();
-            folder=new File("resources\\holidays");
-            if (!folder.exists()) folder.mkdir();
             folder=new File("resources\\jars");
             if (!folder.exists()) folder.mkdir();
             folder=new File("resources");
@@ -273,7 +269,7 @@ public class Clock extends JFrame{
         time.clockmain();
     }
     private void getholidays() {
-        String filename="resources\\holidays\\"+loadschool+"holidays.holidays";
+        String filename="resources/holidays/"+loadschool+"holidays.holidays";
         try {
             InputStream in = getClass().getClassLoader().getResourceAsStream(filename);
             BufferedReader reader=new BufferedReader(new InputStreamReader(in));
@@ -286,7 +282,7 @@ public class Clock extends JFrame{
         } catch (Exception e) {System.out.println(e);}
     }
     private void getschedule() {
-        String filename="resources\\schedules\\"+loadschool+"schedule.schedule";
+        String filename="resources/schedules/"+loadschool+"schedule.schedule";
         try {
             InputStream in = getClass().getClassLoader().getResourceAsStream(filename);
             BufferedReader reader=new BufferedReader(new InputStreamReader(in));

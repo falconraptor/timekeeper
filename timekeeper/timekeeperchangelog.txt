@@ -6,6 +6,8 @@
 
 ---- 3.61 ----
 + Option to not update
+% Load images from jar
+% Load schedules and holidays from jar
 
 ---- 3.6 5/8/2014 ----
 + util class for methods that more than one class uses
