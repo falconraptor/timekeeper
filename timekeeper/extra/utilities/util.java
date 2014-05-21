@@ -7,7 +7,7 @@ import javax.swing.event.*;
 import java.awt.event.*;
 import java.util.*;
 import java.awt.*;
-public class util {
+public abstract class util {
     public static void downloadfile(String url,String filename) {
         try {
             URL download=new URL(url);
