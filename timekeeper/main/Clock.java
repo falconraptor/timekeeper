@@ -15,7 +15,7 @@ import extra.utilities.Calender.*;
 @SuppressWarnings("unchecked")
 public class Clock extends JFrame{
     ArrayList <JLabel> labels=new ArrayList <JLabel> (0);
-    boolean firstlunch=false, assemblybool=false,holidaybool=false,firstbeep=false;
+    boolean firstlunch=false, assemblybool=false,holidaybool=false,firstbeep=false,testing=false;;
     ButtonGroup group=new ButtonGroup();
     optionsdialog ro=new optionsdialog();
     JPanel p1=new JPanel(new GridLayout(1,1,0,0)),p2=new JPanel(new GridLayout(2,1,0,0)),p3=new JPanel(new GridLayout(1,2,0,0));
@@ -23,7 +23,7 @@ public class Clock extends JFrame{
     JRadioButton firstlunchrb=new JRadioButton("First Lunch"),secondlunch=new JRadioButton("Second Lunch");
     JButton assembly=new JButton("Assembly Day Toggle"),options=new JButton("Options"),feedback=new JButton("Feedback"),extras=new JButton("Extras");
     ArrayList<Holiday> holidays=new ArrayList <Holiday>(0);
-    ArrayList<Schedule> schedulenormal=new ArrayList<Schedule>(0),schedulewednesday=new ArrayList<Schedule>(0),schedulethursday=new ArrayList<Schedule>(0),scheduleassembly=new ArrayList<Schedule>(0);
+    ArrayList<Schedule> schedulenormal=new ArrayList<Schedule>(0),schedulewednesday=new ArrayList<Schedule>(0),schedulethursday=new ArrayList<Schedule>(0),scheduleassembly=new ArrayList<Schedule>(0),scheduleseniorexam=new ArrayList<Schedule>(0),schedulefinalone=new ArrayList<Schedule>(0),schedulefinaltwo=new ArrayList<Schedule>(0),schedulefinalthree=new ArrayList<Schedule>(0),schedulelastday=new ArrayList<Schedule>(0);
     Box box=Box.createVerticalBox();
     String[] schools=new String[] {"ATECH"};
     JComboBox school=new JComboBox(schools);
@@ -211,7 +211,11 @@ public class Clock extends JFrame{
     private void calctime(int hour, int minute, int day,boolean skip) {
         String[] holiday=checkholidays();
         if (holiday[0].equals("")||holiday[0].equals(null)) holidaybool=false;
-        else if (holiday.equals("Assembly Day")) assemblybool=true;
+        else if (holiday[0].equals("Assembly Day")) assemblybool=true;
+        else if (holiday[0].equals("Senior Exams")) testing=true;
+        else if (holiday[0].indexOf("Final Exam Day")!=-1) testing=true;
+        else if (holiday[0].equals("Last Day Of School")) testing=true;
+        else if (holiday[0].equals("Full Day")) testing=false;
         else holidaybool=true;
         if (holidaybool) {
             labels.get(4).setText(holiday[0]);
@@ -287,42 +291,120 @@ public class Clock extends JFrame{
             InputStream in = getClass().getClassLoader().getResourceAsStream(filename);
             BufferedReader reader=new BufferedReader(new InputStreamReader(in));
             String out=reader.readLine();
-            boolean normal=false,wednesday=false,thursday=false,assembly=false;
+            boolean normal=false,wednesday=false,thursday=false,assembly=false,senior=false,finalone=false,finaltwo=false,finalthree=false,lastday=false;
             while (out!=null) {
                 if (out.equals("normal")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
                     normal=true;
+                }else if (out.equals("wednesday")) {
+                    normal=false;
                     wednesday=false;
                     thursday=false;
                     assembly=false;
-                } else if (out.equals("wednesday")) {
-                    normal=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
                     wednesday=true;
-                    thursday=false;
-                    assembly=false;
-                } else if (out.equals("thursday")) {
+                }else if (out.equals("thursday")) {
                     normal=false;
                     wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
                     thursday=true;
-                    assembly=false;
-                } else if (out.equals("assembly")) {
+                }else if (out.equals("assembly")) {
                     normal=false;
                     wednesday=false;
                     thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
                     assembly=true;
-                } else {
+                }else if (out.equals("Senior")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
+                    senior=true;
+                }else if (out.equals("Final1")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
+                    finalone=true;
+                }else if (out.equals("Final2")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
+                    finaltwo=true;
+                }else if (out.equals("Final3")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
+                    finalthree=true;
+                }else if (out.equals("Last")) {
+                    normal=false;
+                    wednesday=false;
+                    thursday=false;
+                    assembly=false;
+                    senior=false;
+                    finalone=false;
+                    finaltwo=false;
+                    finalthree=false;
+                    lastday=false;
+                    lastday=true;
+                }else {
                     String[] test=out.split(":");
-                    int[] nums={Integer.parseInt(test[0]),Integer.parseInt(test[1]),Integer.parseInt(test[3]),Integer.parseInt(test[4])};
-                    if (test.length<6) {
-                        if (normal) schedulenormal.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
-                        else if (wednesday) schedulewednesday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
-                        else if (thursday) schedulethursday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
-                        else if (assembly) scheduleassembly.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3]));
-                    } else {
-                        if (normal) schedulenormal.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
-                        else if (wednesday) schedulewednesday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
-                        else if (thursday) schedulethursday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
-                        else if (assembly) scheduleassembly.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],Integer.parseInt(test[5])));
-                    }
+                    int[] nums={Integer.parseInt(test[0]),Integer.parseInt(test[1]),Integer.parseInt(test[3]),Integer.parseInt(test[4]),0};
+                    if (test.length>5) nums[4]=Integer.parseInt(test[5]);
+                    if (normal) schedulenormal.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (wednesday) schedulewednesday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (thursday) schedulethursday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (assembly) scheduleassembly.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (senior) scheduleseniorexam.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (finalone) schedulefinalone.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (finaltwo) schedulefinaltwo.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (finalthree) schedulefinalthree.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
+                    else if (lastday) schedulelastday.add(new Schedule(nums[0],nums[1],test[2],nums[2],nums[3],nums[4]));
                 }
                 out=reader.readLine();
             }
@@ -330,7 +412,13 @@ public class Clock extends JFrame{
     }
     private void checktime(int hour,int minute, int daynum) {
         if (assemblybool) for (Schedule s:scheduleassembly) startcheckingtime(s,hour,minute);
-        else if (daynum==2||daynum==3||daynum==6) for (Schedule s:schedulenormal) startcheckingtime(s,hour,minute);
+        //else if (testing) {
+            else if (checkholidays()[0].equals("Senior Exams")) for (Schedule s:scheduleseniorexam) startcheckingtime(s,hour,minute);
+            else if (checkholidays()[0].equals("Final Exam Day 1")) for (Schedule s:schedulefinalone) startcheckingtime(s,hour,minute);
+            else if (checkholidays()[0].equals("Final Exam Day 2")) for (Schedule s:schedulefinaltwo) startcheckingtime(s,hour,minute);
+            else if (checkholidays()[0].equals("Final Exam Day 3")) for (Schedule s:schedulefinalthree) startcheckingtime(s,hour,minute);
+            else if (checkholidays()[0].equals("Last Day Of School")) for (Schedule s:schedulelastday) startcheckingtime(s,hour,minute);
+        else if (checkholidays()[0].equals("Full Day")||daynum==2||daynum==3||daynum==6) for (Schedule s:schedulenormal) startcheckingtime(s,hour,minute);
         else if (daynum==4) for (Schedule s:schedulewednesday) startcheckingtime(s,hour,minute);
         else if (daynum==5) for (Schedule s:schedulethursday) startcheckingtime(s,hour,minute);
     }

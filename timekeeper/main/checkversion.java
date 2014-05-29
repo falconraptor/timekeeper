@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import extra.utilities.*;
 public class checkversion {
-    double version=3.61;
+    double version=3.62;
     double read=0.0;
     boolean updated=false;
     public void checkversiontime() {

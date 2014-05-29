@@ -4,6 +4,9 @@
 % : Fixed or Modified
 - : Removed
 
+---- 3.62 5/26/2014 ----
++ Final exam days to the schedule
+
 ---- 3.61 ----
 + Option to not update
 % Load images from jar

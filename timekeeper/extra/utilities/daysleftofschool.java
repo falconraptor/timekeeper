@@ -32,7 +32,22 @@ public class daysleftofschool extends JFrame{
     	} else {
     		if (month>holidays.getmonth()) {
     			if (day>holidays.get(index).getday()) {
-    				
+    				int days=0;
+    				for (int i=month;i!=holidays.get(index).month();i++) {
+    					switch (i) {
+    						case 1,3,5,7,8,10,12:
+    							days+=31;
+    							break;
+    						case 4,6,9,11:
+    							days+=30
+    							break;
+    						case 2:
+    							
+    							break;
+    					}
+    					
+    					if (i==12) i=0;
+    				}
     			} else {
     				l.get(0).setText(holidays.get(index).getday()-day+"");
     				l.get(1).setText(12-month+holidays.get(index).getmonth()+"");
