@@ -497,7 +497,7 @@ public class Clock extends JFrame{
         for (int i=0;i<holidays.size();i++) {
             if (month==holidays.get(i).getmonth()&&daymonth==holidays.get(i).getday()) {
                 test[0]=holidays.get(i).getname();
-                test[1]=holidays.get(i+1).getname();
+                if (i!=holidays.size()-1) test[1]=holidays.get(i+1).getname();
                 return test;
             }
         }
