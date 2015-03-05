@@ -503,7 +503,11 @@ public class Clock extends JFrame{
         }
         return new String[] {""};
     }
-    private void setcolors(JLabel l) {
+    private void <T extends JComponent> setcolors(T o){
+        o.setForeground(ro.rc.foreground);
+        o.setBackground(ro.rc.background);
+    }
+    /*private void setcolors(JLabel l) {
         l.setForeground(ro.rc.foreground);
         l.setBackground(ro.rc.background);
     }
@@ -518,7 +522,7 @@ public class Clock extends JFrame{
     private void setcolors(JComboBox c) {
         c.setForeground(ro.rc.foreground);
         c.setBackground(ro.rc.background);
-    }
+    }*/
     private void setopaque(boolean b) {
         for (JPanel jp:p) jp.setOpaque(b);
         firstlunchrb.setOpaque(b);
@@ -553,10 +557,8 @@ public class Clock extends JFrame{
         }
         if (!ro.transparent) setopaque(true);
         else setopaque(false);
-        firstlunchrb.setForeground(ro.rc.foreground);
-        firstlunchrb.setBackground(ro.rc.background);
-        secondlunch.setForeground(ro.rc.foreground);
-        secondlunch.setBackground(ro.rc.background);
+        setcolors(firstlunchrb);
+        setcolors(secondlunch);
         setcolors(assembly);
         setcolors(options);
         setcolors(feedback);
