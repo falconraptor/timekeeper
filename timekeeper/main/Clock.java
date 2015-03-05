@@ -36,7 +36,6 @@ public class Clock extends JFrame{
         super.addWindowListener(new WindowAdapter() {@Override
             public void windowClosing(WindowEvent we) {ro.saveoptions();}});
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        super.setSize(500,500);
         super.pack();
         super.setLocationRelativeTo(null);
     }
@@ -113,7 +112,8 @@ public class Clock extends JFrame{
         }
         p.get(0).add(box);
         checkbackground();
-        packframe();
+        pack();
+        setLocationRelativeTo(null);
         super.setVisible(true);
         new java.util.Timer().schedule(new UpdateUITask(), 0, 1000);
         for (JPanel jp:ro.p) jp.setOpaque(true);
@@ -156,14 +156,16 @@ public class Clock extends JFrame{
             if (am) times=times+" AM";
             else times=times+" PM";
             String day="";
-            int daynum=time.get(7);
-            if (daynum == 2) day="Monday";
+            enum days={Sunday=1,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday};
+            days daynum=time.get(7);
+            /*if (daynum == 2) day="Monday";
             else if (daynum == 3) day="Tuesday";
             else if (daynum == 4) day="Wednesday";
             else if (daynum == 5) day="Thursday";
             else if (daynum == 6) day="Friday";
             else if (daynum == 7) day="Saturday";
-            else if (daynum == 1) day="Sunday";
+            else if (daynum == 1) day="Sunday";*/
+            day=daynum.toString();
             if (assemblybool) day+="-Assembly";
             day+="     "+times;
             labels.get(1).setText(day);
@@ -173,12 +175,12 @@ public class Clock extends JFrame{
             weekends(daynum, time);
             fixcolor();
             checkbackground();
-            packframe();
+            ();
             if (ro.withinsecs == 5) ro.warn();
             ro.withinsecs++;
         }
     }
-    private void packframe() {super.pack();}
+    private void () {super.pack();}
     private void weekends(int daynum,Calendar time) {
         if (daynum==7||daynum==1) {
             int hour=time.get(time.HOUR_OF_DAY),minute=time.get(time.MINUTE);
